@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3f3135f6.css",
+    "main.js": "/static/js/main.61840fc3.js",
+    "static/media/paymentQR.jpg": "/static/media/paymentQR.6b5c62a0c35f28829a79.jpg",
+    "index.html": "/index.html",
+    "main.3f3135f6.css.map": "/static/css/main.3f3135f6.css.map",
+    "main.61840fc3.js.map": "/static/js/main.61840fc3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3f3135f6.css",
+    "static/js/main.61840fc3.js"
+  ]
+}
