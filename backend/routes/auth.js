@@ -129,139 +129,139 @@ router.post('/google', async (req, res) => {
 });
 
 // Update profile
-// router.put('/update-profile', auth, async (req, res) => {
-//   try {
-//     const { name, email } = req.body;
-//     const user = await User.findById(req.user.id);
+router.put('/update-profile', auth, async (req, res) => {
+  try {
+    const { name, email } = req.body;
+    const user = await User.findById(req.user.id);
 
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-//     // Check if email is being changed and if new email already exists
-//     if (email && email !== user.email) {
-//       const existingUser = await User.findOne({ email });
-//       if (existingUser) {
-//         return res.status(400).json({ message: 'Email already in use' });
-//       }
-//       user.email = email;
-//     }
+    // Check if email is being changed and if new email already exists
+    if (email && email !== user.email) {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Email already in use' });
+      }
+      user.email = email;
+    }
 
-//     if (name) {
-//       user.name = name;
-//     }
+    if (name) {
+      user.name = name;
+    }
 
-//     await user.save();
+    await user.save();
 
-//     res.json({
-//       message: 'Profile updated successfully',
-//       user: {
-//         id: user._id,
-//         name: user.name,
-//         email: user.email,
-//         role: user.role
-//       }
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
+    res.json({
+      message: 'Profile updated successfully',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 // Update password (for admin to change default password)
-// router.put('/change-password', auth, async (req, res) => {
-//   try {
-//     const { currentPassword, newPassword } = req.body;
-//     const user = await User.findById(req.user.id);
+router.put('/change-password', auth, async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.user.id);
 
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-//     // Check current password
-//     const isMatch = await user.comparePassword(currentPassword);
-//     if (!isMatch) {
-//       return res.status(400).json({ message: 'Current password is incorrect' });
-//     }
+    // Check current password
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' });
+    }
 
-//     // Update password
-//     user.password = newPassword;
-//     await user.save();
+    // Update password
+    user.password = newPassword;
+    await user.save();
 
-//     res.json({ message: 'Password updated successfully' });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
+    res.json({ message: 'Password updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 // Get current user
-// router.get('/me', auth, async (req, res) => {
-//   try {
-//     const user = await User.findById(req.user.id);
-//     res.json({
-//       user: {
-//         id: user._id,
-//         name: user.name,
-//         email: user.email,
-//         phone: user.phone,
-//         role: user.role
-//       }
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
+router.get('/me', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 // Get user notifications
-// router.get('/notifications', auth, async (req, res) => {
-//   try {
-//     const Notification = require('../models/Notification');
-//     const notifications = await Notification.find({ user: req.user.id })
-//       .sort({ createdAt: -1 })
-//       .limit(50);
-//     res.json(notifications);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
+router.get('/notifications', auth, async (req, res) => {
+  try {
+    const Notification = require('../models/Notification');
+    const notifications = await Notification.find({ user: req.user.id })
+      .sort({ createdAt: -1 })
+      .limit(50);
+    res.json(notifications);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 // Mark notification as read
-// router.put('/notifications/:id/read', auth, async (req, res) => {
-//   try {
-//     const Notification = require('../models/Notification');
-//     const notification = await Notification.findOneAndUpdate(
-//       { _id: req.params.id, user: req.user.id },
-//       { read: true },
-//       { new: true }
-//     );
+router.put('/notifications/:id/read', auth, async (req, res) => {
+  try {
+    const Notification = require('../models/Notification');
+    const notification = await Notification.findOneAndUpdate(
+      { _id: req.params.id, user: req.user.id },
+      { read: true },
+      { new: true }
+    );
     
-//     if (!notification) {
-//       return res.status(404).json({ message: 'Notification not found' });
-//     }
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found' });
+    }
     
-//     res.json(notification);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
+    res.json(notification);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 // Delete notification (User)
-// router.delete('/notifications/:id', auth, async (req, res) => {
-//   try {
-//     const Notification = require('../models/Notification');
-//     const notification = await Notification.findOneAndDelete({
-//       _id: req.params.id,
-//       user: req.user.id
-//     });
+router.delete('/notifications/:id', auth, async (req, res) => {
+  try {
+    const Notification = require('../models/Notification');
+    const notification = await Notification.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user.id
+    });
     
-//     if (!notification) {
-//       return res.status(404).json({ message: 'Notification not found' });
-//     }
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found' });
+    }
     
-//     res.json({ message: 'Notification deleted successfully' });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
+    res.json({ message: 'Notification deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router;
 

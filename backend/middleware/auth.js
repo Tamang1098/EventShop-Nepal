@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // JWT Secret with fallback
-const JWT_SECRET = process.env.JWT_SECRET || 'eventshopnepal_jwt_secret_key_2025_change_in_production';
+const JWT_SECRET = process.env.JWT_SECRET || 'ecommerce_jwt_secret_key_2024_change_in_production';
 
 const auth = async (req, res, next) => {
   try {
@@ -26,4 +26,18 @@ const auth = async (req, res, next) => {
   }
 };
 
+const adminAuth = async (req, res, next) => {
+  try {
+    await auth(req, res, () => {
+      if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Access denied. Admin only.' });
+      }
+      next();
+    });
+  } catch (error) {
+    res.status(401).json({ message: 'Authentication failed' });
+  }
+};
+
+module.exports = { auth, adminAuth };
 
