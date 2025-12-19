@@ -37,9 +37,10 @@ router.post('/', auth, async (req, res) => {
           continue;
         }
 
+        // Check stock first
         if (product.stock < cartItem.quantity) {
-          return res.status(400).json({ 
-            message: `Insufficient stock for ${product.name}` 
+          return res.status(400).json({
+            message: `Insufficient stock for ${product.name}`
           });
         }
 
@@ -54,9 +55,18 @@ router.post('/', auth, async (req, res) => {
           image: product.image
         });
 
-        // Update stock
-        product.stock -= cartItem.quantity;
-        await product.save();
+        // Update stock atomically
+        const updatedProduct = await Product.findOneAndUpdate(
+          { _id: product._id, stock: { $gte: cartItem.quantity } },
+          { $inc: { stock: -cartItem.quantity } },
+          { new: true }
+        );
+
+        if (!updatedProduct) {
+          return res.status(400).json({
+            message: `Insufficient stock for ${product.name}`
+          });
+        }
       }
 
       calculatedShippingFee = calculatedSubtotal > 1000 ? 0 : 100;
@@ -70,13 +80,19 @@ router.post('/', auth, async (req, res) => {
         if (!product) {
           return res.status(400).json({ message: `Product ${item.name} not found` });
         }
-        if (product.stock < item.quantity) {
-          return res.status(400).json({ 
-            message: `Insufficient stock for ${item.name}` 
+
+        // Atomic update for stock
+        const updatedProduct = await Product.findOneAndUpdate(
+          { _id: item.product, stock: { $gte: item.quantity } },
+          { $inc: { stock: -item.quantity } },
+          { new: true }
+        );
+
+        if (!updatedProduct) {
+          return res.status(400).json({
+            message: `Insufficient stock for ${item.name}`
           });
         }
-        product.stock -= item.quantity;
-        await product.save();
       }
     }
 
@@ -193,12 +209,12 @@ router.put('/:id/status', adminAuth, async (req, res) => {
         processing: 'Your order is being processed',
         delivered: 'Your order has been delivered'
       };
-      
+
       const now = new Date();
       const date = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
       const day = now.toLocaleDateString('en-US', { weekday: 'long' });
       const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      
+
       await Notification.create({
         type: 'order',
         message: `${statusMessages[orderStatus]}. Order #${order.orderNumber} - ${date}, ${day}, ${time}`,
@@ -237,7 +253,7 @@ router.get('/admin/all', adminAuth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
-    
+
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
@@ -245,7 +261,7 @@ router.delete('/:id', auth, async (req, res) => {
     // Check if user owns the order or is admin
     const isOwner = order.user.toString() === req.user.id;
     const isAdmin = req.user.role === 'admin';
-    
+
     if (!isOwner && !isAdmin) {
       return res.status(403).json({ message: 'Access denied' });
     }
@@ -257,11 +273,11 @@ router.delete('/:id', auth, async (req, res) => {
 
     // Restore product stock
     for (const item of order.items) {
-      const product = await Product.findById(item.product);
-      if (product) {
-        product.stock += item.quantity;
-        await product.save();
-      }
+      const product = await Product.findByIdAndUpdate(
+        item.product,
+        { $inc: { stock: item.quantity } },
+        { new: true }
+      );
     }
 
     // Delete associated payment if exists
@@ -272,7 +288,7 @@ router.delete('/:id', auth, async (req, res) => {
 
     // Delete the order
     await Order.findByIdAndDelete(req.params.id);
-    
+
     console.log('Order cancelled/deleted successfully:', req.params.id);
     res.json({ message: 'Order cancelled successfully' });
   } catch (error) {

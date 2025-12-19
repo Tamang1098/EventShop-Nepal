@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Footer.css';
 
 const Footer = () => {
+    const [showVideo, setShowVideo] = useState(false);
+
     return (
         <footer className="footer">
             <div className="footer-container">
@@ -11,52 +13,54 @@ const Footer = () => {
                     <div className="footer-content">
                         <div className="contact-item">
                             <span className="contact-icon">📱</span>
-                            <a href="tel:+9779812345678" className="contact-link">
+                            <span className="contact-link">
                                 +977 981-2345678
-                            </a>
+                            </span>
                         </div>
                         <div className="contact-item">
                             <span className="contact-icon">📱</span>
-                            <a href="tel:+9779823456789" className="contact-link">
-                                +977 982-3456789
-                            </a>
+                            <span className="contact-link">
+                                +977 984-3456789
+                            </span>
                         </div>
                         <div className="contact-item">
                             <span className="contact-icon">✉️</span>
-                            <a href="mailto:info@eventshopnepal.com" className="contact-link">
-                                info@eventshopnepal.com
-                            </a>
+                            <span className="contact-link">
+                                eventshopnepal123@gmail.com
+                            </span>
                         </div>
                     </div>
                 </div>
 
                 {/* How to Shop Section */}
                 <div className="footer-section">
-                    <h3 className="footer-heading">🛒 How to Shop</h3>
+                    <h3 className="footer-heading">🛒 How to Shop Products</h3>
                     <div className="footer-content">
-                        <ol className="shop-instructions">
-                            <li>
-                                <strong>Browse Products:</strong> Explore our categories or search for specific items
-                            </li>
-                            <li>
-                                <strong>View Details:</strong> Click on any product to see full details and images
-                            </li>
-                            <li>
-                                <strong>Register/Login:</strong> Create an account or login to place orders
-                            </li>
-                            <li>
-                                <strong>Select Quantity:</strong> Choose the quantity you need
-                            </li>
-                            <li>
-                                <strong>Buy Now:</strong> Click "Buy Now" and select payment method (Online/COD)
-                            </li>
-                            <li>
-                                <strong>Track Order:</strong> View your order status in "My Orders" section
-                            </li>
-                        </ol>
+                        <button
+                            className="watch-video-btn"
+                            onClick={() => setShowVideo(true)}
+                        >
+                            <span>🎥</span> Watch Video Guide
+                        </button>
                     </div>
                 </div>
             </div>
+
+            {/* Video Modal */}
+            {showVideo && (
+                <div className="video-modal-overlay" onClick={() => setShowVideo(false)}>
+                    <div className="video-modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="close-modal-btn" onClick={() => setShowVideo(false)}>×</button>
+                        <h3 className="modal-title">How to Shop at EventShop Nepal</h3>
+                        <div className="video-wrapper">
+                            <video controls autoPlay width="100%">
+                                <source src="/videos/howtoshoptour.mp4" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Copyright */}
             <div className="footer-bottom">

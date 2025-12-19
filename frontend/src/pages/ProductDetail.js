@@ -241,6 +241,21 @@ const ProductDetail = () => {
       const orderRes = await axios.post('http://localhost:5000/api/orders', orderData);
       const { order, payment } = orderRes.data;
 
+      // Dispatch events for updates
+      window.dispatchEvent(new Event('newOrderCreated'));
+      window.dispatchEvent(new Event('productUpdated'));
+      window.dispatchEvent(new CustomEvent('productUpdatedId', { detail: { productId: product._id } }));
+
+      localStorage.setItem('newOrderCreated', Date.now().toString());
+      localStorage.setItem('productUpdated', Date.now().toString());
+      localStorage.setItem('productUpdatedId', product._id);
+
+      setTimeout(() => {
+        localStorage.removeItem('newOrderCreated');
+        localStorage.removeItem('productUpdated');
+        localStorage.removeItem('productUpdatedId');
+      }, 100);
+
       if (method === 'online') {
         // Online payment - show QR code modal
         setPaymentId(payment._id);

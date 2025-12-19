@@ -6,6 +6,11 @@ import RegisterModal from '../components/RegisterModal';
 import LoginModal from '../components/LoginModal';
 import './LandingPage.css';
 
+import corporateBanner from '../assets/corporate_banner.JPG';
+import festivalBanner from '../assets/festival_banner.jpeg';
+import weddingBanner from '../assets/wedding_banner.jpeg';
+
+
 const LandingPage = () => {
   const { t } = useLanguage();
   const [products, setProducts] = useState([]);
@@ -24,30 +29,20 @@ const LandingPage = () => {
   const bannerSlides = [
     {
       id: 1,
-      title: 'Welcome to EventShop Nepal',
-      subtitle: 'Discover Amazing Event Products',
-      image: 'https://images.unsplash.com/photo-1607082349566-187342175e2f?w=1200&h=400&fit=crop',
-      color: 'linear-gradient(135deg, #ff7043 0%, #ff5722 100%)'
+      image: weddingBanner,
+
+      color: 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)'
     },
     {
       id: 2,
-      title: 'Best Deals',
-      subtitle: 'Buy Now & Save More',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=400&fit=crop',
-      color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-    },
-    {
-      id: 3,
-      title: 'Quality Products',
-      subtitle: 'Premium Quality Guaranteed',
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=400&fit=crop',
+      image: festivalBanner,
+
       color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
     },
     {
-      id: 4,
-      title: 'Fast Delivery',
-      subtitle: 'Quick & Reliable Delivery',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=400&fit=crop',
+      id: 3,
+
+      image: corporateBanner,
       color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
     }
   ];
@@ -58,7 +53,7 @@ const LandingPage = () => {
   // Auto-slide banner
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 4);
+      setCurrentSlide((prev) => (prev + 1) % 3);
     }, 4000);
     return () => clearInterval(interval);
   }, []);
@@ -203,7 +198,7 @@ const LandingPage = () => {
   return (
     <div className="landing-page">
       {/* Banner Carousel */}
-      <section className="banner-carousel">
+      {/* <section className="banner-carousel">
         <div className="banner-container">
           {bannerSlides.map((slide, index) => (
             <div
@@ -227,7 +222,39 @@ const LandingPage = () => {
             ))}
           </div>
         </div>
+      </section> */}
+
+      <section className="banner-carousel">
+        <div className="banner-container">
+          {bannerSlides.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`banner-slide ${index === currentSlide ? 'active' : ''}`}
+              style={{
+                backgroundImage: `
+            url(${slide.image})
+          `
+              }}
+            >
+              <div className="banner-content">
+                <h1 className="banner-title">{slide.title}</h1>
+                <p className="banner-subtitle">{slide.subtitle}</p>
+              </div>
+            </div>
+          ))}
+
+          <div className="banner-dots">
+            {bannerSlides.map((_, index) => (
+              <button
+                key={index}
+                className={`banner-dot ${index === currentSlide ? 'active' : ''}`}
+                onClick={() => setCurrentSlide(index)}
+              />
+            ))}
+          </div>
+        </div>
       </section>
+
 
       {/* Featured Products */}
       {featuredProducts.length > 0 && (
