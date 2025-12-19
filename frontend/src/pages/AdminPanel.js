@@ -32,8 +32,11 @@ const AdminPanel = () => {
   const [additionalImagePreviews, setAdditionalImagePreviews] = useState([]);
   const [existingImageUrls, setExistingImageUrls] = useState([]);
   const [categoryFormData, setCategoryFormData] = useState({
-    name: ''
+    name: '',
+    image: '',
   });
+  const [categoryImageFile, setCategoryImageFile] = useState(null);
+  const [categoryImagePreview, setCategoryImagePreview] = useState('');
 
   useEffect(() => {
     if (user?.role === 'admin') {
@@ -454,17 +457,44 @@ const AdminPanel = () => {
     });
   };
 
+  const handleCategoryImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setCategoryImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setCategoryImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   const handleCategorySubmit = async (e) => {
     e.preventDefault();
     try {
+      const submitData = new FormData();
+      submitData.append('name', categoryFormData.name);
+      if (categoryImageFile) {
+        submitData.append('image', categoryImageFile);
+      }
+
       if (editingCategory) {
         await axios.put(
           `http://localhost:5000/api/admin/categories/${editingCategory._id}`,
-          categoryFormData
+          submitData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
         );
       } else {
-        await axios.post('http://localhost:5000/api/admin/categories', categoryFormData);
+        await axios.post('http://localhost:5000/api/admin/categories', submitData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
       }
       fetchCategories();
       resetCategoryForm();
@@ -483,8 +513,11 @@ const AdminPanel = () => {
   const handleCategoryEdit = (category) => {
     setEditingCategory(category);
     setCategoryFormData({
-      name: category.name
+      name: category.name,
+      image: category.image
     });
+    setCategoryImageFile(null);
+    setCategoryImagePreview(category.image || '');
     setShowCategoryForm(true);
   };
 
@@ -508,8 +541,11 @@ const AdminPanel = () => {
 
   const resetCategoryForm = () => {
     setCategoryFormData({
-      name: ''
+      name: '',
+      image: ''
     });
+    setCategoryImageFile(null);
+    setCategoryImagePreview('');
     setEditingCategory(null);
     setShowCategoryForm(false);
   };
@@ -1076,19 +1112,44 @@ const AdminPanel = () => {
                       placeholder="e.g., Electronics"
                     />
                   </div>
+
+                  <div className="form-group">
+                    <label>Category Image</label>
+                    <div className="image-upload-container">
+                      <label className="file-upload-btn">
+                        Choose Image
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleCategoryImageChange}
+                          hidden
+                        />
+                      </label>
+                      {categoryImagePreview && (
+                        <div className="image-preview">
+                          <img src={categoryImagePreview} alt="Preview" />
+                          <button
+                            type="button"
+                            className="remove-image-btn"
+                            onClick={() => {
+                              setCategoryImageFile(null);
+                              setCategoryImagePreview('');
+                            }}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                   <div className="form-actions">
-                    <button type="submit" className="submit-btn">
-                      {editingCategory ? 'Update Category' : 'Add Category'}
+                    <button type="submit" className="submit-btn" disabled={loading}>
+                      {loading ? 'Saving...' : (editingCategory ? 'Update Category' : 'Add Category')}
                     </button>
-                    {editingCategory && (
-                      <button
-                        type="button"
-                        onClick={resetCategoryForm}
-                        className="cancel-btn"
-                      >
-                        Cancel
-                      </button>
-                    )}
+                    <button type="button" onClick={resetCategoryForm} className="cancel-btn">
+                      Cancel
+                    </button>
                   </div>
                 </form>
               </div>

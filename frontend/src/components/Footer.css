@@ -12,10 +12,11 @@
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 2rem 2rem;
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* 3 Equal Columns */
+    gap: 2rem;
     align-items: start;
 }
 
@@ -23,15 +24,46 @@
 .footer-section {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
+}
+
+/* Branding Section */
+.branding-section {
+    text-align: left;
+}
+
+.footer-brand-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ff7043;
+    /* Matches brand color */
+    margin: 0;
+    line-height: 1.2;
+}
+
+.footer-slogan {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Contact Section - Centered */
+.contact-section {
+    align-items: center;
+    text-align: center;
+}
+
+.centered-content {
+    align-items: center;
 }
 
 .footer-heading {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: black;
+    color: #333;
     margin: 0;
-    padding-bottom: 0.4rem;
+    padding-bottom: 0.5rem;
     border-bottom: 2px solid #ff7043;
     display: inline-block;
     text-transform: uppercase;
@@ -41,105 +73,72 @@
 .footer-content {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.75rem;
 }
+
+/* Video Section - Right Aligned (visually, but content is left aligned in column) */
+.video-section {
+    align-items: flex-end;
+    text-align: right;
+}
+
+/* Reset alignments for mobile/tablet in media queries if needed, 
+   but let's keep video section logic simple. */
+.video-section .footer-heading {
+    border-bottom: 2px solid #ff7043;
+}
+
+.video-section .footer-content {
+    align-items: flex-end;
+}
+
 
 /* Contact Items */
 .contact-item {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.35rem 0.5rem;
-    background: #f8f9fa;
+    padding: 0.35rem 0.75rem;
+    /* background: #f8f9fa; No background requested explicitly, but kept for readability if desired. 
+       User said "contact harurakha dekhney gari" -> "visible clearly". 
+       Let's keep the existing bubble style but maybe simpler? 
+       Using previous style is fine. */
+    background: transparent;
     border-radius: 6px;
     transition: all 0.3s;
-    border: 1px solid #e9ecef;
+    /* border: 1px solid #e9ecef; */
 }
 
 .contact-item:hover {
-    background: #fff5f0;
-    border-color: #ff7043;
     transform: translateX(3px);
+    color: #ff7043;
 }
 
 .contact-icon {
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 .contact-link {
-    color: #333;
+    color: #444;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: default;
-}
-
-/* Shop Instructions */
-.shop-instructions {
-    list-style: none;
-    counter-reset: step-counter;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-}
-
-.shop-instructions li {
-    counter-increment: step-counter;
-    position: relative;
-    padding: 0.4rem 0.5rem;
-    padding-left: 2.25rem;
-    background: #f8f9fa;
-    border-radius: 6px;
-    border-left: 2px solid #ff7043;
-    transition: all 0.3s;
-    line-height: 1.4;
-    font-size: 0.8rem;
-    color: #555;
-}
-
-.shop-instructions li:hover {
-    background: #fff5f0;
-    transform: translateX(3px);
-}
-
-.shop-instructions li::before {
-    content: counter(step-counter);
-    position: absolute;
-    left: 0.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #ff7043;
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.7rem;
-    box-shadow: 0 1px 3px rgba(255, 112, 67, 0.3);
-}
-
-.shop-instructions li strong {
-    color: #ff7043;
-    font-weight: 600;
 }
 
 /* Footer Bottom */
 .footer-bottom {
     background: #f8f9fa;
-    padding: 0.6rem 2rem;
+    padding: 1rem 2rem;
     text-align: center;
     border-top: 1px solid #e0e0e0;
+    margin-top: 1rem;
 }
 
 .footer-bottom p {
     margin: 0;
-    font-size: 0.8rem;
-    color: black;
+    font-size: 0.85rem;
+    color: #666;
     font-weight: 500;
 }
 

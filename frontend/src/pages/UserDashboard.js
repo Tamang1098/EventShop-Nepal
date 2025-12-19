@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ProductCard from '../components/ProductCard';
 import './UserDashboard.css';
 
 const UserDashboard = () => {
@@ -17,6 +18,24 @@ const UserDashboard = () => {
     newPassword: '',
     confirmPassword: ''
   });
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [catRes, prodRes] = await Promise.all([
+          axios.get('http://localhost:5000/api/products/categories/list'),
+          axios.get('http://localhost:5000/api/products?limit=1000')
+        ]);
+        setCategories(catRes.data);
+        setProducts(Array.isArray(prodRes.data) ? prodRes.data : (prodRes.data.products || []));
+      } catch (err) {
+        console.error('Error fetching dashboard data:', err);
+      }
+    };
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -53,7 +72,7 @@ const UserDashboard = () => {
       const res = await axios.put('http://localhost:5000/api/auth/update-profile', {
         name: profileData.name
       });
-      
+
       setSuccess('Profile updated successfully!');
       // Refresh user data
       window.location.reload();
@@ -87,7 +106,7 @@ const UserDashboard = () => {
         currentPassword: profileData.currentPassword,
         newPassword: profileData.newPassword
       });
-      
+
       setSuccess('Password changed successfully!');
       setProfileData({
         ...profileData,
@@ -129,20 +148,20 @@ const UserDashboard = () => {
 
             <div className="dashboard-menu">
               <button className="menu-item active">Profile</button>
-              <button 
+              <button
                 className="menu-item"
                 onClick={() => navigate('/orders')}
               >
                 My Orders
               </button>
-              <button 
+              <button
                 className="menu-item"
                 onClick={() => navigate('/cart')}
               >
                 Shopping Cart
               </button>
               {user?.role === 'admin' && (
-                <button 
+                <button
                   className="menu-item admin-menu"
                   onClick={() => navigate('/admin')}
                 >
@@ -224,6 +243,34 @@ const UserDashboard = () => {
                   {loading ? 'Changing...' : 'Change Password'}
                 </button>
               </form>
+            </div>
+
+            {/* Category Representative Products Row */}
+            <div className="category-products-section">
+              <h2>Browse Categories</h2>
+              <div className="category-row">
+                <div className="products-scroller">
+                  {categories.map(category => {
+                    // Find the first product for this category
+                    const product = products.find(p => p.category === category.name);
+
+                    if (product) {
+                      return (
+                        <div key={category._id} className="category-representative-card">
+                          <div className="category-label">{category.name}</div>
+                          <ProductCard product={product} />
+                        </div>
+                      );
+                    } else {
+                      // Fallback if no product exists for category - maybe show category placeholder?
+                      // User specifically asked for "product", so skip if none? 
+                      // Or show a placeholder card. Let's show a placeholder linking to category filter if possible, 
+                      // but for now let's just skip or show nothing to keep it clean as per "show product" request.
+                      return null;
+                    }
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>

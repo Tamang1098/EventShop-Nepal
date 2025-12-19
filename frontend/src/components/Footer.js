@@ -7,10 +7,16 @@ const Footer = () => {
     return (
         <footer className="footer">
             <div className="footer-container">
-                {/* Contact Us Section */}
-                <div className="footer-section">
-                    <h3 className="footer-heading">📞 Contact Us</h3>
-                    <div className="footer-content">
+                {/* 1. Branding Section (Left) */}
+                <div className="footer-section branding-section">
+                    <h2 className="footer-brand-name">EventShop Nepal</h2>
+                    <p className="footer-slogan">Celebrate Life's Moments</p>
+                </div>
+
+                {/* 2. Contact Us Section (Center) */}
+                <div className="footer-section contact-section">
+                    <h3 className="footer-heading">Contact Us</h3>
+                    <div className="footer-content centered-content">
                         <div className="contact-item">
                             <span className="contact-icon">📱</span>
                             <span className="contact-link">
@@ -32,9 +38,9 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* How to Shop Section */}
-                <div className="footer-section">
-                    <h3 className="footer-heading">🛒 How to Shop Products</h3>
+                {/* 3. Video/Instructions Section (Right) */}
+                <div className="footer-section video-section">
+                    <h3 className="footer-heading">How to Shop</h3>
                     <div className="footer-content">
                         <button
                             className="watch-video-btn"

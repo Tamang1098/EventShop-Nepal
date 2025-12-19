@@ -365,13 +365,19 @@ const ProductDetail = () => {
                       lens.style.display = 'block';
                       result.style.display = 'block';
 
-                      // Calculate zoom with reduced magnification (2x zoom instead of full ratio)
-                      const zoomFactor = 2;
+                      // Calculate zoom with reduced magnification
+                      const zoomFactor = 2; // Can adjust this if needed
 
                       // Set background position for zoomed image
                       result.style.backgroundImage = `url('${img.src}')`;
                       result.style.backgroundSize = (img.width * zoomFactor) + 'px ' + (img.height * zoomFactor) + 'px';
-                      result.style.backgroundPosition = '-' + ((x - lensWidth) * zoomFactor) + 'px -' + ((y - lensHeight) * zoomFactor) + 'px';
+
+                      // Calculate position
+                      // The background moves in the opposite direction of the lens
+                      const bgX = (x - lensWidth) * zoomFactor;
+                      const bgY = (y - lensHeight) * zoomFactor;
+
+                      result.style.backgroundPosition = `-${bgX}px -${bgY}px`;
                     }}
                     onMouseEnter={(e) => {
                       const container = e.currentTarget.parentElement;

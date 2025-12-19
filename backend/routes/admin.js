@@ -45,8 +45,8 @@ router.post('/products', adminAuth, upload.fields([
     }
     // Also check for image URLs in body (comma-separated or array)
     if (req.body.images) {
-      const imageUrls = Array.isArray(req.body.images) 
-        ? req.body.images 
+      const imageUrls = Array.isArray(req.body.images)
+        ? req.body.images
         : req.body.images.split(',').map(url => url.trim()).filter(url => url);
       additionalImages.push(...imageUrls);
     }
@@ -117,13 +117,13 @@ router.put('/products/:id', adminAuth, upload.fields([
         }
       }
     }
-    
+
     if (newImageFiles.length > 0 || existingImageUrls.length > 0) {
       // Map new file uploads to URLs
-      const newImageUrls = newImageFiles.map(file => 
+      const newImageUrls = newImageFiles.map(file =>
         `http://localhost:5000/uploads/${file.filename}`
       );
-      
+
       // Combine existing URLs with new ones, avoiding duplicates
       const allImages = [...existingImageUrls, ...newImageUrls];
       // Remove duplicates based on URL
@@ -134,8 +134,8 @@ router.put('/products/:id', adminAuth, upload.fields([
         // Empty string or null means clear all additional images
         updateData.images = [];
       } else {
-        const imageUrls = Array.isArray(req.body.images) 
-          ? req.body.images 
+        const imageUrls = Array.isArray(req.body.images)
+          ? req.body.images
           : req.body.images.split(',').map(url => url.trim()).filter(url => url);
         updateData.images = imageUrls;
       }
@@ -189,12 +189,18 @@ router.get('/products', adminAuth, async (req, res) => {
 // Category Management Routes
 
 // Add category (Admin only)
-router.post('/categories', adminAuth, async (req, res) => {
+router.post('/categories', adminAuth, upload.single('image'), async (req, res) => {
   try {
     const { name } = req.body;
+    let image = '';
+
+    if (req.file) {
+      image = `http://localhost:5000/uploads/${req.file.filename}`;
+    }
 
     const category = new Category({
-      name
+      name,
+      image
     });
 
     const savedCategory = await category.save();
@@ -220,13 +226,19 @@ router.get('/categories', adminAuth, async (req, res) => {
 });
 
 // Update category (Admin only)
-router.put('/categories/:id', adminAuth, async (req, res) => {
+router.put('/categories/:id', adminAuth, upload.single('image'), async (req, res) => {
   try {
     const { name } = req.body;
+    const updateData = { name };
+
+    // Update image if new file uploaded
+    if (req.file) {
+      updateData.image = `http://localhost:5000/uploads/${req.file.filename}`;
+    }
 
     const category = await Category.findByIdAndUpdate(
       req.params.id,
-      { name },
+      updateData,
       { new: true, runValidators: true }
     );
 
@@ -271,7 +283,7 @@ router.get('/users', adminAuth, async (req, res) => {
 router.delete('/users/:id', adminAuth, async (req, res) => {
   try {
     const userId = req.params.id;
-    
+
     // Prevent admin from deleting themselves
     if (req.user.id === userId) {
       return res.status(400).json({ message: 'You cannot delete your own account' });
@@ -334,11 +346,11 @@ router.put('/notifications/:id/read', adminAuth, async (req, res) => {
 router.delete('/notifications/:id', adminAuth, async (req, res) => {
   try {
     const notification = await Notification.findByIdAndDelete(req.params.id);
-    
+
     if (!notification) {
       return res.status(404).json({ message: 'Notification not found' });
     }
-    
+
     console.log('Notification deleted successfully from MongoDB:', req.params.id);
     res.json({ message: 'Notification deleted successfully' });
   } catch (error) {

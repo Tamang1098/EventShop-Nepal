@@ -19,6 +19,10 @@ const categorySchema = new mongoose.Schema({
     type: String,
     default: '📦'
   },
+  image: {
+    type: String,
+    default: ''
+  },
   status: {
     type: String,
     enum: ['active', 'inactive'],
@@ -29,7 +33,7 @@ const categorySchema = new mongoose.Schema({
 });
 
 // Generate slug from name before saving
-categorySchema.pre('save', function(next) {
+categorySchema.pre('save', function (next) {
   if (this.isModified('name') && !this.slug) {
     this.slug = this.name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
   }
