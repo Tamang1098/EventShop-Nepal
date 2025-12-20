@@ -218,7 +218,7 @@ router.post('/categories', adminAuth, upload.single('image'), async (req, res) =
 // Get all categories (Admin)
 router.get('/categories', adminAuth, async (req, res) => {
   try {
-    const categories = await Category.find().sort({ name: 1 });
+    const categories = await Category.find().sort({ createdAt: -1 });
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: error.message });

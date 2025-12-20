@@ -55,11 +55,11 @@
 }
 
 .user-navbar .navbar-welcome {
-  color: white;
+  color: black;
   font-weight: 600;
   font-size: 0.95rem;
   padding: 0.6rem 1.2rem;
-  background: linear-gradient(135deg, #ff7043 0%, #ff5722 100%);
+  background: transaprent;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(255, 112, 67, 0.3);
   white-space: nowrap;

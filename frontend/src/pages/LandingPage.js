@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useLanguage } from '../context/LanguageContext';
 import ProductCard from '../components/ProductCard';
@@ -13,6 +13,7 @@ import weddingBanner from '../assets/wedding_banner.jpeg';
 
 const LandingPage = () => {
   const { t } = useLanguage();
+  const productSectionRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -186,6 +187,20 @@ const LandingPage = () => {
     setShowRegisterModal(true);
   };
 
+  const handleCategorySelect = (categoryName) => {
+    setSelectedCategory(categoryName);
+    if (categoryName === 'all') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Use setTimeout to ensure state updates and DOM are ready before scrolling
+      setTimeout(() => {
+        if (productSectionRef.current) {
+          productSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  };
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -256,22 +271,7 @@ const LandingPage = () => {
       </section>
 
 
-      {/* Featured Products */}
-      {featuredProducts.length > 0 && (
-        <section className="products-section">
-          <div className="container">
-            <h2 className="section-title">{t('featuredProducts')}</h2>
-            <div className="products-grid">
-              {featuredProducts.map((product) => (
-                <ProductCard
-                  key={product._id}
-                  product={product}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+
 
       {/* Category Filter & All Products */}
       <section className="products-section">
@@ -283,7 +283,7 @@ const LandingPage = () => {
               <div className="category-list">
                 <button
                   className={`category-item ${selectedCategory === 'all' ? 'active' : ''}`}
-                  onClick={() => setSelectedCategory('all')}
+                  onClick={() => handleCategorySelect('all')}
                 >
                   {t('allCategories')}
                 </button>
@@ -291,7 +291,7 @@ const LandingPage = () => {
                   <button
                     key={category._id}
                     className={`category-item ${selectedCategory === category.name ? 'active' : ''}`}
-                    onClick={() => setSelectedCategory(category.name)}
+                    onClick={() => handleCategorySelect(category.name)}
                   >
                     {category.name}
                   </button>
@@ -317,6 +317,27 @@ const LandingPage = () => {
 
           {/* Main Content Area */}
           <div className="main-content">
+
+            {/* Featured Products */}
+            {featuredProducts.length > 0 && (
+              <div className="featured-products-section">
+                <h2 className="category-subtitle">{t('featuredProducts')}</h2>
+                <div className="products-grid">
+                  {featuredProducts.map((product) => (
+                    <ProductCard
+                      key={product._id}
+                      product={product}
+                    />
+                  ))}
+                </div>
+                <div style={{ margin: '2rem 0', borderBottom: '1px solid #eee' }}></div>
+              </div>
+            )}
+
+            {/* Dynamic Section Title */}
+            <h2 className="category-subtitle" ref={productSectionRef}>
+              {selectedCategory === 'all' ? (t('allProducts') || 'All Products') : selectedCategory}
+            </h2>
 
             {products.length === 0 ? (
               <div className="no-products">

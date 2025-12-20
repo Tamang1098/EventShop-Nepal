@@ -100,7 +100,7 @@ router.get('/featured/all', async (req, res) => {
 // Get categories
 router.get('/categories/list', async (req, res) => {
   try {
-    const categories = await Category.find({ status: 'active' }).sort({ name: 1 });
+    const categories = await Category.find({ status: 'active' }).sort({ createdAt: -1 });
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: error.message });
