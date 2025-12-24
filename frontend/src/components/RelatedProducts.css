@@ -7,12 +7,12 @@
 }
 
 .related-products-title {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: #333;
+    color: black;
     margin-bottom: 1rem;
     text-align: left;
-    border-bottom: 2px solid #ff7043;
+    border-bottom: 1px dotted #b2beb5;
     padding-bottom: 0.5rem;
 }
 

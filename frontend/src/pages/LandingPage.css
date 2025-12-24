@@ -430,12 +430,12 @@
 
 .sidebar-title {
   font-size: 1.3rem;
-  font-weight: 800;
-  color: #333;
+  font-weight:bold;
+  color: #ff7043;
   margin-bottom: 1.5rem;
   padding: 1rem 0;
   padding-top: 0;
-  border-bottom: 3px solid #ff7043;
+  border-bottom: 2px double #ff7043;
   position: sticky;
   top: 0;
   background: white;
@@ -467,7 +467,7 @@
   text-align: left;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #333;
+  color: black;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -524,7 +524,7 @@
 /* Show Products Section */
 .show-products-section {
   margin-top: 2rem;
-  padding: 1.25rem;
+  padding: 1rem;
   border-top: 2px solid #f0f0f0;
   background: linear-gradient(135deg, #fff5f0 0%, #ffffff 100%);
   border-radius: 12px;
@@ -535,7 +535,7 @@
   display: block;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #333;
+  color:black;
   margin-bottom: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;

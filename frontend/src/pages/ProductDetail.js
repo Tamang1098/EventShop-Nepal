@@ -417,7 +417,7 @@ const ProductDetail = () => {
               <div className="product-info-section">
                 <h1 className="product-title">{product.name}</h1>
                 <div className="product-price-section">
-                  <span className="product-price">Rs. {product.price}</span>
+                  <span className="product-price">NRs. {product.price}</span>
                 </div>
                 <div className="stock-info">
                   <span className="stock-label">{t('stock')}:</span>
@@ -454,7 +454,7 @@ const ProductDetail = () => {
                   </div>
                   <div className="total-price-section">
                     <span className="total-label">{t('total')}:</span>
-                    <span className="total-price">Rs. {totalPrice.toFixed(2)}</span>
+                    <span className="total-price">NRs. {totalPrice.toFixed(2)}</span>
                   </div>
                   <div className="action-buttons">
                     <button onClick={() => navigate('/')} className="back-btn-inline">

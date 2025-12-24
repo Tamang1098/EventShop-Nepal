@@ -172,8 +172,8 @@
 }
 
 .thumbnail {
-  width: 130px;
-  height: 130px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
   border-radius: 6px;
   cursor: pointer;
@@ -198,23 +198,23 @@
 }
 
 .product-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
+  font-size: 1rem;
+  font-weight: 400;
+  color: black;
   margin: 0;
 }
 
 
 .product-price-section {
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   border-top: 2px solid #f0f0f0;
   border-bottom: 2px solid #f0f0f0;
 }
 
 .product-price {
-  font-size: 2rem;
-  font-weight: 800;
-  color: #ff7043;
+  font-size: 1rem;
+  font-weight: 400;
+  color:black;
 }
 
 .product-actions {
@@ -230,8 +230,8 @@
 }
 
 .quantity-selector label {
-  font-weight: 600;
-  color: #333;
+  font-weight: 400;
+  color:black;
 }
 
 .quantity-controls {
@@ -279,16 +279,16 @@
 }
 
 .stock-label {
-  font-weight: 600;
-  color: #666;
+  font-weight: 400;
+  color: black;
 }
 
 .stock-value {
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .stock-value.in-stock {
-  color: #4CAF50;
+  color: black;
 }
 
 .stock-value.out-of-stock {
@@ -306,15 +306,15 @@
 }
 
 .total-label {
-  font-weight: 600;
-  color: #333;
+  font-weight: 400;
+  color: black;
   font-size: 1.1rem;
 }
 
 .total-price {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #ff7043;
+  font-size: 1rem;
+  font-weight: 400;
+  color: black;
 }
 
 .action-buttons {

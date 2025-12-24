@@ -16,7 +16,7 @@
   /* 16px */
   --font-size-md: 1.125rem;
   /* 18px */
-  --font-size-lg: 1.25rem;
+  --font-size-lg: 1.1rem;
   /* 20px */
   --font-size-xl: 1.5rem;
   /* 24px */
@@ -194,8 +194,6 @@ p {
   transform: none;
 }
 
-/* ========== NIELSEN'S HEURISTICS IMPLEMENTATION ========== */
-
 /* 1. Visibility of System Status - Loading, Success, Error States */
 .status-loading {
   display: inline-block;
@@ -229,7 +227,6 @@ p {
   }
 }
 
-/* 2. Match System and Real World - Clear Labels */
 .label {
   font-family: var(--font-family);
   font-size: var(--font-size-sm);
@@ -239,7 +236,6 @@ p {
   margin-bottom: var(--spacing-xs);
 }
 
-/* 3. User Control and Freedom - Clear Cancel/Back Options */
 .btn-cancel {
   background: transparent;
   color: var(--color-text-secondary);
@@ -258,7 +254,6 @@ p {
   border-color: var(--color-text-tertiary);
 }
 
-/* 4. Consistency and Standards - Consistent Spacing */
 .container {
   max-width: 1400px;
   margin: 0 auto;
@@ -269,7 +264,7 @@ p {
   padding: var(--spacing-2xl) 0;
 }
 
-/* 5. Error Prevention - Form Validation Styles */
+
 .input-error {
   border-color: #f44336 !important;
   box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1) !important;

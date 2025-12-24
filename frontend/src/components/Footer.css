@@ -34,7 +34,7 @@
 
 .footer-brand-name {
     font-size: 1.8rem;
-    font-weight: 800;
+    font-weight:bold;
     color: black;
     /* Matches brand color */
     margin: 0;
@@ -59,8 +59,8 @@
 }
 
 .footer-heading {
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1.8rem;
+    font-weight:bold;
     color: black;
     margin: 0;
     padding-bottom: 0.5rem;
@@ -116,7 +116,7 @@
 }
 
 .contact-link {
-    color: #444;
+    color:black;
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
@@ -225,7 +225,7 @@
 
 /* Video Modal Styles */
 .watch-video-btn {
-    background: yellow;
+    background:none;
     color: black;
     border: none;
     padding: 0.6rem 2rem;
@@ -240,6 +240,8 @@
     box-shadow: 0 2px 5px rgba(255, 112, 67, 0.3);
     width: fit-content;
 }
+
+
 
 .watch-video-btn:hover {
     background: #f4511e;

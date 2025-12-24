@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Footer.css';
+import guideVideo from '../assets/guide_video.mp4';
 
 const Footer = () => {
     const [showVideo, setShowVideo] = useState(false);
@@ -46,7 +47,7 @@ const Footer = () => {
                             className="watch-video-btn"
                             onClick={() => setShowVideo(true)}
                         >
-                            <span>🎥</span> Watch Video Guide
+                            <span>🎥</span> Watch Guide Video
                         </button>
                     </div>
                 </div>
@@ -60,7 +61,7 @@ const Footer = () => {
                         <h3 className="modal-title">How to Shop at EventShop Nepal</h3>
                         <div className="video-wrapper">
                             <video controls autoPlay width="100%">
-                                <source src="/videos/howtoshoptour.mp4" type="video/mp4" />
+                                <source src={guideVideo} type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
                         </div>
