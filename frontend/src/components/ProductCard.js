@@ -4,7 +4,7 @@ import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
-  const discount = product.originalPrice 
+  const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
@@ -35,9 +35,9 @@ const ProductCard = ({ product }) => {
   return (
     <div className="product-card" onClick={handleCardClick}>
       <div className="product-image-container">
-        <img 
-          src={getImageUrl(product.image)} 
-          alt={product.name} 
+        <img
+          src={getImageUrl(product.image)}
+          alt={product.name}
           className="product-image"
           onError={(e) => {
             // Try alternative image paths if first attempt fails

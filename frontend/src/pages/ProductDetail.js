@@ -92,7 +92,6 @@ const ProductDetail = () => {
   useEffect(() => {
     // Listen for product updates from admin or when reviews are added/deleted
     const handleProductUpdate = () => {
-      console.log('Product update detected, refreshing product details...');
       fetchProduct();
     };
 

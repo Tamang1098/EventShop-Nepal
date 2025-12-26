@@ -83,14 +83,12 @@ const LandingPage = () => {
   useEffect(() => {
     // Listen for updates from admin (products, categories, users)
     const handleProductUpdate = () => {
-      console.log('Product update detected, refreshing...');
       fetchProducts();
       fetchFeaturedProducts();
       fetchCategories(); // Refresh categories in case they changed
     };
 
     const handleCategoryUpdate = () => {
-      console.log('Category update detected, refreshing...');
       fetchCategories();
       fetchProducts(); // Refresh products in case category changes affected them
       fetchFeaturedProducts();
