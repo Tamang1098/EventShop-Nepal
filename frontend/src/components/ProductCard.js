@@ -68,6 +68,7 @@ const ProductCard = ({ product }) => {
           )}
           <span className="product-price">NRs. {product.price}</span>
         </div>
+
       </div>
     </div>
   );

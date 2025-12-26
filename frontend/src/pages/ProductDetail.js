@@ -34,6 +34,7 @@ const ProductDetail = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchProduct();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -323,158 +324,160 @@ const ProductDetail = () => {
   return (
     <div className="product-detail-page">
       <div className="container-full">
+
         <div className="product-layout">
-          <div className="product-main-section">
-            <div className="product-detail-content">
-              <div className="product-image-section">
-                <div className="main-image-container">
-                  <img
-                    src={getImageUrl(productImages[selectedImageIndex])}
-                    alt={product.name}
-                    className="product-main-image"
-                    onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/500';
-                    }}
-                    onMouseMove={(e) => {
-                      const container = e.currentTarget.parentElement;
-                      const lens = container.querySelector('.zoom-lens');
-                      const result = container.querySelector('.zoom-result');
-
-                      if (!lens || !result) return;
-
-                      const img = e.currentTarget;
-                      const rect = img.getBoundingClientRect();
-
-                      // Calculate cursor position relative to image
-                      let x = e.clientX - rect.left;
-                      let y = e.clientY - rect.top;
-
-                      // Prevent lens from going outside image bounds
-                      const lensWidth = lens.offsetWidth / 2;
-                      const lensHeight = lens.offsetHeight / 2;
-
-                      x = Math.max(lensWidth, Math.min(x, rect.width - lensWidth));
-                      y = Math.max(lensHeight, Math.min(y, rect.height - lensHeight));
-
-                      // Position the lens
-                      lens.style.left = (x - lensWidth) + 'px';
-                      lens.style.top = (y - lensHeight) + 'px';
-
-                      // Show lens and result
-                      lens.style.display = 'block';
-                      result.style.display = 'block';
-
-                      // Calculate zoom with reduced magnification
-                      const zoomFactor = 2; // Can adjust this if needed
-
-                      // Set background position for zoomed image
-                      result.style.backgroundImage = `url('${img.src}')`;
-                      result.style.backgroundSize = (img.width * zoomFactor) + 'px ' + (img.height * zoomFactor) + 'px';
-
-                      // Calculate position
-                      // The background moves in the opposite direction of the lens
-                      const bgX = (x - lensWidth) * zoomFactor;
-                      const bgY = (y - lensHeight) * zoomFactor;
-
-                      result.style.backgroundPosition = `-${bgX}px -${bgY}px`;
-                    }}
-                    onMouseEnter={(e) => {
-                      const container = e.currentTarget.parentElement;
-                      const lens = container.querySelector('.zoom-lens');
-                      const result = container.querySelector('.zoom-result');
-                      if (lens) lens.style.display = 'block';
-                      if (result) result.style.display = 'block';
-                    }}
-                    onMouseLeave={(e) => {
-                      const container = e.currentTarget.parentElement;
-                      const lens = container.querySelector('.zoom-lens');
-                      const result = container.querySelector('.zoom-result');
-                      if (lens) lens.style.display = 'none';
-                      if (result) result.style.display = 'none';
-                    }}
-                  />
-                  <div className="zoom-lens"></div>
-                  <div className="zoom-result"></div>
+          <div className="product-detail-content">
+            <div className="product-image-section">
+              {productImages.length > 1 && (
+                <div className="image-thumbnails vertical">
+                  {productImages.map((img, index) => (
+                    <img
+                      key={index}
+                      src={getImageUrl(img)}
+                      alt={`${product.name} ${index + 1}`}
+                      className={`thumbnail ${selectedImageIndex === index ? 'active' : ''}`}
+                      onClick={() => setSelectedImageIndex(index)}
+                      onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/100';
+                      }}
+                    />
+                  ))}
                 </div>
-                {productImages.length > 1 && (
-                  <div className="image-thumbnails">
-                    {productImages.map((img, index) => (
-                      <img
-                        key={index}
-                        src={getImageUrl(img)}
-                        alt={`${product.name} ${index + 1}`}
-                        className={`thumbnail ${selectedImageIndex === index ? 'active' : ''}`}
-                        onClick={() => setSelectedImageIndex(index)}
-                        onError={(e) => {
-                          e.target.src = 'https://via.placeholder.com/100';
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
+              )}
+              <div className="main-image-container">
+                <img
+                  src={getImageUrl(productImages[selectedImageIndex])}
+                  alt={product.name}
+                  className="product-main-image"
+                  onError={(e) => {
+                    e.target.src = 'https://via.placeholder.com/500';
+                  }}
+                  onMouseMove={(e) => {
+                    const container = e.currentTarget.parentElement;
+                    const lens = container.querySelector('.zoom-lens');
+                    const result = container.querySelector('.zoom-result');
+
+                    if (!lens || !result) return;
+
+                    const img = e.currentTarget;
+                    const rect = img.getBoundingClientRect();
+
+                    // Calculate cursor position relative to image
+                    let x = e.clientX - rect.left;
+                    let y = e.clientY - rect.top;
+
+                    // Prevent lens from going outside image bounds
+                    const lensWidth = lens.offsetWidth / 2;
+                    const lensHeight = lens.offsetHeight / 2;
+
+                    x = Math.max(lensWidth, Math.min(x, rect.width - lensWidth));
+                    y = Math.max(lensHeight, Math.min(y, rect.height - lensHeight));
+
+                    // Position the lens
+                    lens.style.left = (x - lensWidth) + 'px';
+                    lens.style.top = (y - lensHeight) + 'px';
+
+                    // Show lens and result
+                    lens.style.display = 'block';
+                    result.style.display = 'block';
+
+                    // Calculate zoom with reduced magnification
+                    const zoomFactor = 2; // Can adjust this if needed
+
+                    // Set background position for zoomed image
+                    result.style.backgroundImage = `url('${img.src}')`;
+                    result.style.backgroundSize = (img.width * zoomFactor) + 'px ' + (img.height * zoomFactor) + 'px';
+
+                    // Calculate position
+                    // The background moves in the opposite direction of the lens
+                    const bgX = (x - lensWidth) * zoomFactor;
+                    const bgY = (y - lensHeight) * zoomFactor;
+
+                    result.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+                  }}
+                  onMouseEnter={(e) => {
+                    const container = e.currentTarget.parentElement;
+                    const lens = container.querySelector('.zoom-lens');
+                    const result = container.querySelector('.zoom-result');
+                    if (lens) lens.style.display = 'block';
+                    if (result) result.style.display = 'block';
+                  }}
+                  onMouseLeave={(e) => {
+                    const container = e.currentTarget.parentElement;
+                    const lens = container.querySelector('.zoom-lens');
+                    const result = container.querySelector('.zoom-result');
+                    if (lens) lens.style.display = 'none';
+                    if (result) result.style.display = 'none';
+                  }}
+                />
+                <div className="zoom-lens"></div>
+                <div className="zoom-result"></div>
               </div>
-              <div className="product-info-section">
-                <h1 className="product-title">{product.name}</h1>
-                <div className="product-price-section">
-                  <span className="product-price">NRs. {product.price}</span>
-                </div>
-                <div className="stock-info">
-                  <span className="stock-label">{t('stock')}:</span>
-                  <span className={`stock-value ${availableStock > 0 ? 'in-stock' : 'out-of-stock'}`}>
-                    {availableStock > 0 ? (
-                      quantity > 0 ? `${remainingStock} ${t('remaining')} (${availableStock} total)` : `${availableStock} ${t('available')}`
-                    ) : t('outOfStock')}
+            </div>
+            <div className="product-info-section">
+              <h1 className="product-title">{product.name}</h1>
+              <div className="product-price-section">
+                <span className="product-price">NRs. {product.price}</span>
+              </div>
+
+              <div className="stock-info-card">
+                <div className="stock-status">
+                  <span className={`status-dot ${availableStock > 0 ? 'green' : 'red'}`}></span>
+                  <span className="status-text">
+                    {availableStock > 0 ? t('inStock') : t('outOfStock')}
                   </span>
                 </div>
-                <div className="product-actions">
-                  <div className="quantity-selector">
-                    <label>{t('quantity')}:</label>
-                    <div className="quantity-controls">
-                      <button
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="quantity-btn"
-                        disabled={quantity <= 1}
-                      >
-                        -
-                      </button>
-                      <span className="quantity-value">{quantity}</span>
-                      <button
-                        onClick={() => {
-                          if (quantity < availableStock) {
-                            setQuantity(quantity + 1);
-                          }
-                        }}
-                        className="quantity-btn"
-                        disabled={quantity >= availableStock || availableStock === 0}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <div className="total-price-section">
-                    <span className="total-label">{t('total')}:</span>
-                    <span className="total-price">NRs. {totalPrice.toFixed(2)}</span>
-                  </div>
-                  <div className="action-buttons">
-                    <button onClick={() => navigate('/')} className="back-btn-inline">
-                      ← Back to Product Page
-                    </button>
-                    <button
-                      className="buy-now-btn"
-                      onClick={handleBuyNow}
-                      disabled={processing || availableStock === 0 || quantity === 0}
-                    >
-                      {processing ? t('processing') : t('buyNow')}
-                    </button>
-                  </div>
+                {availableStock > 0 && (
+                  <span className="stock-count">
+                    {availableStock - quantity} {t('unitsAvailable')} ({availableStock} {t('total')})
+                  </span>
+                )}
+              </div>
+
+              <div className="product-actions-row">
+                <div className="quantity-selector-modern">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="qty-btn"
+                    disabled={quantity <= 1}
+                  >
+                    -
+                  </button>
+                  <span className="qty-value">{quantity}</span>
+                  <button
+                    onClick={() => {
+                      if (quantity < availableStock) {
+                        setQuantity(quantity + 1);
+                      }
+                    }}
+                    className="qty-btn"
+                    disabled={quantity >= availableStock || availableStock === 0}
+                  >
+                    +
+                  </button>
                 </div>
+
+                <button
+                  className="buy-now-btn-modern"
+                  onClick={handleBuyNow}
+                  disabled={processing || availableStock === 0 || quantity === 0}
+                >
+                  {processing ? t('processing') : t('buyNow')}
+                </button>
+              </div>
+
+              <div className="total-price-section">
+                <span className="total-label">{t('total')}:</span>
+                <span className="total-price">NRs. {totalPrice.toFixed(2)}</span>
               </div>
             </div>
-            <div className="product-reviews-section">
-              <ProductReview product={product} onReviewAdded={fetchProduct} />
-            </div>
           </div>
-          <div className="product-sidebar">
+
+          <div className="product-reviews-section">
+            <ProductReview product={product} onReviewAdded={fetchProduct} />
+          </div>
+
+          <div className="related-products-container">
             <RelatedProducts products={relatedProducts} currentProductId={product._id} />
           </div>
         </div>
