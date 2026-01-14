@@ -298,7 +298,7 @@
 /* Products Section */
 .products-section {
   padding: 5px 0;
-  background: whitesmoke;
+  background:white;
   margin-top: 1rem;
 }
 
@@ -907,7 +907,7 @@
 
 .category-subtitle {
   font-size: 2rem;
-  font-weight: bold;
+  font-weight:700px;
   color: black;
   margin: 0;
   margin-left: 5rem;
@@ -919,5 +919,6 @@
   background: none;
   position: relative;
   scroll-margin-top: 100px;
+   font-family: "Times New Roman", Times, serif;
   /* Ensure title is not hidden behind fixed header when scrolled to */
 }

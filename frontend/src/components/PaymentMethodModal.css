@@ -133,7 +133,7 @@
 }
 
 .cancel-payment-btn:hover {
-  background: #c82333;
+  background: #333;
 }
 
 .confirm-payment-btn {
@@ -142,7 +142,7 @@
 }
 
 .confirm-payment-btn:hover:not(:disabled) {
-  background: #ff5722;
+  background: #333;
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255, 112, 67, 0.4);

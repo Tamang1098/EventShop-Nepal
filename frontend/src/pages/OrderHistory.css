@@ -1,14 +1,16 @@
 .order-history-page {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: whitesmoke;
   padding: 2rem 0;
   padding-top: 100px;
 }
 
 .order-history-page h1 {
-  color: #333;
+  color: black;
   margin-bottom: 2rem;
   font-size: 2rem;
+   font-family: "Times New Roman", Times, serif;
+   font-weight: 500;
 }
 
 .notifications-section {
@@ -17,12 +19,14 @@
   background: white;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .notifications-list {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  
 }
 
 .notification-item-unread {
@@ -50,8 +54,9 @@
 
 .no-orders p {
   font-size: 1.2rem;
-  color: #666;
+  color: black;
   margin-bottom: 2rem;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .shop-now-btn {
@@ -101,8 +106,9 @@
 
 .order-header h3 {
   margin: 0 0 0.5rem 0;
-  color: #333;
+  color:black;
   font-size: 1.3rem;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .order-date-time {
@@ -112,16 +118,18 @@
 }
 
 .order-date {
-  color: #666;
+  color: black;
   font-size: 0.9rem;
   margin: 0;
   font-weight: 500;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .order-time {
-  color: #888;
+  color: black;
   font-size: 0.85rem;
   margin: 0;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .order-status-badge {
@@ -144,11 +152,12 @@
 
 .order-items-title {
   font-size: 1.1rem;
-  font-weight: 700;
-  color: #333;
+  font-weight: 400;
+  color: black;
   margin: 0 0 1rem 0;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid #ff7043;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .order-items-list {
@@ -191,23 +200,26 @@
 
 .order-item-name {
   font-size: 1rem;
-  font-weight: 700;
-  color: #333;
+  font-weight: 500;
+  color: black;
   margin: 0;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .order-item-quantity {
   font-size: 0.9rem;
-  color: #666;
+  color: black;
   margin: 0;
   font-weight: 500;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .order-item-price {
   font-size: 1rem;
-  font-weight: 700;
-  color: #ff7043;
+  font-weight: 400;
+  color: black;
   margin: 0;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .order-footer {
@@ -220,11 +232,14 @@
 
 .order-total {
   font-size: 1.2rem;
-  color: #333;
+  color: black;
+   font-family: "Times New Roman", Times, serif;
 }
 
 .order-total strong {
-  color: #f60;
+  color: black;
+   font-family: "Times New Roman", Times, serif;
+   font-weight: 400;
 }
 
 .view-details-btn {
@@ -259,4 +274,5 @@
     width: 100%;
   }
 }
+
 

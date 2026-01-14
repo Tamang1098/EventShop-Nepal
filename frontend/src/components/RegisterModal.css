@@ -143,6 +143,7 @@
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 102, 0, 0.4);
+   background: #333;
 }
 
 .submit-btn:disabled {
@@ -167,7 +168,7 @@
 }
 
 .switch-link:hover {
-  color: #ff8c00;
+  color: #333;;
 }
 
 /* Auth Progress Bar */
